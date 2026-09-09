@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Detalle del Vehículo | MadeCars</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="img/logos/favicon.png">
+    <meta name="apple-mobile-web-app-title" content="MadeCars">
+    <meta name="apple-touch-icon" content="img/logos/logoMovil-128x128.png">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link rel="stylesheet" href="css/inventario.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-principal: #000000;
+            --bg-header: #000000;
+            --bg-footer: #000000;
+            --texto-principal: #ffffff;
+            --texto-secundario: #9ca3af;
+            --bg-tarjeta: #000000;
+            --borde-tarjeta: #ffffff;
+            --hover-tarjeta: rgba(220, 38, 38, 0.3);
+            --texto-titulo: #ffffff;
+            --btn-solicitar-bg: #DC2626;
+            --btn-solicitar-texto: #ffffff;
+            --btn-cotizar-bg: #ffffff;
+            --btn-cotizar-texto: #000000;
+            --precio-color: #DC2626;
+            --texto-tarjeta-detalle: #ffffff;
+            
+            /* Formulario */
+            --form-bg: #000000;
+            --form-titulo: #ffffff;
+            --form-input-bg: #1a1a1a;
+            --form-input-texto: #ffffff;
+            --form-label: #9ca3af;
+        }
+
+        body.light-mode {
+            --bg-principal: #ffffff;
+            --bg-header: #000000;
+            --bg-footer: #000000;
+            --texto-principal: #1f2937;
+            --texto-secundario: #4b5563;
+            
+            /* Tarjetas con fondo negro en tema claro */
+            --bg-tarjeta: #000000;
+            --borde-tarjeta: #ffffff;
+            --hover-tarjeta: rgba(220, 38, 38, 0.2);
+            --texto-titulo: #ffffff;
+            --btn-solicitar-bg: #000000;
+            --btn-solicitar-texto: #ffffff;
+            --btn-cotizar-bg: #DC2626;
+            --btn-cotizar-texto: #ffffff;
+            --precio-color: #DC2626;
+            --texto-tarjeta-detalle: #ffffff;
+            
+            /* Formulario en tema claro */
+            --form-bg: #f3f4f6;
+            --form-titulo: #000000;
+            --form-input-bg: #000000;
+            --form-input-texto: #ffffff;
+            --form-label: #4b5563;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-principal);
+            color: var(--texto-principal);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Poppins', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .text-rojo { color: #DC2626; }
+        .bg-rojo { background-color: #DC2626; }
+        .border-rojo { border-color: #DC2626; }
+
+        /* Botón Solicitar Financiamiento */
+        .btn-solicitar {
+            background-color: var(--btn-solicitar-bg);
+            color: var(--btn-solicitar-texto);
+            transition: all 0.3s ease;
+        }
+        .btn-solicitar:hover {
+            opacity: 0.9;
+        }
+
+        /* Botón Cotizar */
+        .btn-cotizar {
+            background-color: var(--btn-cotizar-bg);
+            color: var(--btn-cotizar-texto);
+            transition: all 0.3s ease;
+        }
+        .btn-cotizar:hover {
+            opacity: 0.9;
+        }
+
+        /* Precio */
+        .precio {
+            color: var(--precio-color);
+        }
+
+        /* Tarjetas de características */
+        .tarjeta-caracteristica {
+            background-color: var(--bg-tarjeta);
+            border: 1px solid var(--borde-tarjeta);
+            padding: 1rem;
+            border-radius: 0.5rem;
+        }
+        .tarjeta-caracteristica p {
+            color: var(--texto-tarjeta-detalle);
+        }
+        .tarjeta-caracteristica .label {
+            color: var(--texto-secundario);
+            font-size: 0.75rem;
+        }
+
+        /* Formulario */
+        .form-contenedor {
+            background-color: var(--form-bg);
+            border: 1px solid var(--borde-tarjeta);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+        }
+        .form-titulo {
+            color: var(--form-titulo);
+            font-weight: bold;
+        }
+        .form-label {
+            color: var(--form-label);
+            font-size: 0.875rem;
+            margin-bottom: 0.25rem;
+            display: block;
+        }
+        .form-input {
+            background-color: var(--form-input-bg);
+            color: var(--form-input-texto);
+            border: 1px solid var(--borde-tarjeta);
+            border-radius: 0.5rem;
+            padding: 0.5rem 1rem;
+            width: 100%;
+        }
+
+        .whatsapp-float {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 9999;
+            width: 65px;
+            height: 65px;
+            background-color: #25D366;
+            color: white;
+            border-radius: 50px;
+            font-size: 35px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        .whatsapp-float:hover { background-color: #128C7E; transform: scale(1.1); }
+
+        .header-tema { background-color: var(--bg-header); }
+        .footer-tema { background-color: var(--bg-footer); color: var(--texto-secundario); }
+        .header-tema a, .footer-tema, .footer-tema p {
+            color: #ffffff;
+        }
+
+        #menu-movil { display: none; }
+    </style>
+</head>
+<body class="bg-animado" id="body-tema">
+
+    <!-- Header -->
+    <nav class="header-tema backdrop-blur-md p-4 sticky top-0 z-50 border-b-2 border-rojo">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="index.php"><img src="img/logos/logo.png" alt="Logo MadeCars" class="h-12"></a>
+            <div class="hidden md:flex items-center space-x-6 font-medium">
+                <a href="index.php" class="hover:text-rojo transition">Inicio</a>
+                <a href="inventory.html" class="hover:text-rojo transition">Inventario</a>
+                <a href="index.php#quienes-somos" class="hover:text-rojo transition">Quiénes Somos</a>
+                <a href="index.php#contacto" class="hover:text-rojo transition">Contacto</a>
+                <button onclick="toggleTheme()" class="theme-toggle bg-rojo/10 text-rojo hover:bg-rojo hover:text-white">
+                    <i id="icono-tema" class="fas fa-sun"></i>
+                </button>
+            </div>
+            <div class="md:hidden flex items-center space-x-4">
+                <button onclick="toggleTheme()" class="theme-toggle bg-rojo/10 text-rojo hover:bg-rojo hover:text-white">
+                    <i id="icono-tema-movil" class="fas fa-sun"></i>
+                </button>
+                <button onclick="toggleMenu()" class="text-rojo text-2xl">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        <div id="menu-movil" class="md:hidden mt-2 rounded-lg p-4" style="background-color: var(--bg-header);">
+            <a href="index.php" class="block py-2 text-white hover:text-rojo transition">Inicio</a>
+            <a href="inventory.html" class="block py-2 text-white hover:text-rojo transition">Inventario</a>
+            <a href="index.php#quienes-somos" class="block py-2 text-white hover:text-rojo transition">Quiénes Somos</a>
+            <a href="index.php#contacto" class="block py-2 text-white hover:text-rojo transition">Contacto</a>
+        </div>
+    </nav>
+
+    <!-- Contenedor de Detalles -->
+    <div class="container mx-auto px-4 py-10" id="contenedor-detalle">
+        <div class="text-center">
+            <i class="fas fa-circle-notch fa-spin text-4xl text-rojo"></i>
+            <p class="mt-4" style="color: var(--texto-secundario);">Cargando información del vehículo...</p>
+        </div>
+    </div>
+
+    <!-- Modal: Solicitud de Financiamiento (Formulario Completo) -->
+    <div id="modal-financiamiento" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4" style="background-color: rgba(0,0,0,0.8);">
+        <div class="form-contenedor w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-2xl font-bold text-rojo">Solicitud de Financiamiento</h3>
+                <button onclick="cerrarModal('modal-financiamiento')" class="text-2xl" style="color: var(--form-label);">&times;</button>
+            </div>
+            <form id="form-financiamiento">
+                <input type="hidden" name="vehiculo_id" id="fin_vehiculo_id">
+                <h4 class="text-lg font-bold mb-3 form-titulo">Datos del Cliente</h4>
+                <div class="grid grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label class="form-label">Nombre Completo</label>
+                        <input type="text" name="nombre" required class="form-input">
+                    </div>
+                    <div>
+                        <label class="form-label">Cédula</label>
+                        <input type="text" name="cedula" required class="form-input">
+                    </div>
+                    <div>
+                        <label class="form-label">Teléfono</label>
+                        <input type="tel" name="telefono" required class="form-input">
+                    </div>
+                    <div>
+                        <label class="form-label">Email</label>
+                        <input type="email" name="email" required class="form-input">
+                    </div>
+                    <div>
+                        <label class="form-label">Dirección</label>
+                        <input type="text" name="direccion" required class="form-input">
+                    </div>
+                    <div>
+                        <label class="form-label">Ocupación</label>
+                        <input type="text" name="ocupacion" required class="form-input">
+                    </div>
+                </div>
+                <h4 class="text-lg font-bold mb-3 form-titulo">Datos Financieros</h4>
+                <div class="grid grid-cols-2 gap-4 mb-6">
+                    <div>
+                        <label class="form-label">Ingreso Mensual (USD)</label>
+                        <input type="number" name="ingreso_mensual" required class="form-input">
+                    </div>
+                    <div>
+                        <label class="form-label">Monto Inicial (USD)</label>
+                        <input type="number" name="monto_inicial" required class="form-input">
+                    </div>
+                    <div>
+                        <label class="form-label">Plazo (meses)</label>
+                        <select name="plazo" required class="form-input">
+                            <option value="12">12 meses</option>
+                            <option value="24">24 meses</option>
+                            <option value="36">36 meses</option>
+                            <option value="48">48 meses</option>
+                            <option value="60">60 meses</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="form-label">Tasa de interés (%)</label>
+                        <input type="number" name="tasa" value="12" class="form-input">
+                    </div>
+                </div>
+                <button type="submit" class="btn-solicitar w-full font-bold py-3 rounded-lg transition">Enviar Solicitud</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: Cotización -->
+    <div id="modal-cotizacion" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4" style="background-color: rgba(0,0,0,0.8);">
+        <div class="form-contenedor w-full max-w-md">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-2xl font-bold text-rojo">Cotización Personalizada</h3>
+                <button onclick="cerrarModal('modal-cotizacion')" class="text-2xl" style="color: var(--form-label);">&times;</button>
+            </div>
+            <form id="form-cotizacion">
+                <input type="hidden" name="vehiculo_id" id="cot_vehiculo_id">
+                <div class="space-y-4">
+                    <div>
+                        <label class="form-label">Nombre Completo</label>
+                        <input type="text" name="nombre" required class="form-input">
+                    </div>
+                    <div>
+                        <label class="form-label">Monto Inicial (USD)</label>
+                        <input type="number" name="monto_inicial" required class="form-input">
+                    </div>
+                    <div>
+                        <label class="form-label">Número de Solicitud</label>
+                        <input type="text" name="numero_solicitud" required class="form-input" placeholder="Ej: SOL-000123">
+                        <p class="text-xs mt-1" style="color: var(--form-label);">*Este número será proporcionado automáticamente por el sistema.</p>
+                    </div>
+                </div>
+                <button type="submit" class="btn-cotizar mt-6 w-full font-bold py-3 rounded-lg transition">Crear Cotización</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer-tema py-8 border-t border-rojo">
+        <div class="container mx-auto px-4 text-center">
+            <img src="img/logos/logo.png" alt="Logo MadeCars" class="h-10 mx-auto mb-4">
+            <p>© 2026 MadeCars. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Botón WhatsApp Flotante -->
+    <a href="https://wa.me/18294649902?text=Hola%20MadeCars,%20Me%20interesa%20m%C3%A1s%20informacion%20sobre" target="_blank" class="whatsapp-float" aria-label="WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script src="js/detalle.js"></script>
+    <script>
+        function toggleTheme() {
+            const body = document.getElementById('body-tema');
+            body.classList.toggle('light-mode');
+            const icono = document.getElementById('icono-tema');
+            const iconoMovil = document.getElementById('icono-tema-movil');
+            if (body.classList.contains('light-mode')) {
+                icono.className = 'fas fa-moon';
+                iconoMovil.className = 'fas fa-moon';
+                localStorage.setItem('theme', 'light');
+            } else {
+                icono.className = 'fas fa-sun';
+                iconoMovil.className = 'fas fa-sun';
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const temaGuardado = localStorage.getItem('theme');
+            const body = document.getElementById('body-tema');
+            const icono = document.getElementById('icono-tema');
+            const iconoMovil = document.getElementById('icono-tema-movil');
+            if (temaGuardado === 'light') {
+                body.classList.add('light-mode');
+                icono.className = 'fas fa-moon';
+                iconoMovil.className = 'fas fa-moon';
+            } else {
+                icono.className = 'fas fa-sun';
+                iconoMovil.className = 'fas fa-sun';
+            }
+        });
+
+        function toggleMenu() {
+            const menu = document.getElementById('menu-movil');
+            menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+[
+    {
+        "id": "1",
+        "marca": "TOYOTA",
+        "modelo": "COROLLA SE",
+        "anio": "2021",
+        "transmision": "Automática",
+        "kilometraje": "217.261",
+        "precio": "$ RD 1,150,000.00",
+        "portada": "img\/vehiculos\/vehiculo_1788794310_2.jpg",
+        "imagenes": [
+            "img\/vehiculos\/vehiculo_1788794310_0.jpg",
+            "img\/vehiculos\/vehiculo_1788794310_1.jpg",
+            "img\/vehiculos\/vehiculo_1788794310_2.jpg",
+            "img\/vehiculos\/vehiculo_1788794310_3.jpg"
+        ],
+        "caracteristicas_extra": "Apple Car Play, tapicería color beige, vidrios eléctricos "
+    },
+    {
+        "id": "2",
+        "marca": "MAZDA",
+        "modelo": "CX-5 S Premium Plus",
+        "anio": "2022",
+        "transmision": "Automática",
+        "kilometraje": "122.000",
+        "precio": "$ RD 1,550,000",
+        "portada": "img\/vehiculos\/vehiculo_1788794335_1.jpg",
+        "imagenes": [
+            "img\/vehiculos\/vehiculo_1788794335_0.jpg",
+            "img\/vehiculos\/vehiculo_1788794335_1.jpg",
+            "img\/vehiculos\/vehiculo_1788794335_2.jpg",
+            "img\/vehiculos\/vehiculo_1788794335_3.jpg"
+        ]
+    }
+]
