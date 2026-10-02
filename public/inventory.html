@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inventario | MadeCars</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="img/logos/favicon.png">
+
+    <!-- Icono para App / Versión Móvil -->
+    <meta name="apple-mobile-web-app-title" content="MadeCars">
+    <meta name="apple-touch-icon" content="img/logos/logoMovil-128x128.png">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link rel="stylesheet" href="css/inventario.css">
+
+    <!-- Fuentes -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-principal: #000000;
+            --bg-header: #000000;
+            --bg-footer: #000000;
+            --texto-principal: #ffffff;
+            --texto-secundario: #9ca3af;
+            --bg-tarjeta: #000000;
+            --borde-tarjeta: #ffffff;
+            --hover-tarjeta: rgba(220, 38, 38, 0.3);
+            --texto-titulo: #ffffff;
+            --btn-ver-bg: #DC2626;
+            --btn-ver-texto: #ffffff;
+            --precio-color: #DC2626;
+        }
+
+        body.light-mode {
+            --bg-principal: #ffffff;
+            --bg-header: #000000;
+            --bg-footer: #000000;
+            --texto-principal: #1f2937;
+            --texto-secundario: #4b5563;
+            --bg-tarjeta: #ffffff;
+            --borde-tarjeta: #e5e7eb;
+            --hover-tarjeta: rgba(220, 38, 38, 0.2);
+            --texto-titulo: #1f2937;
+            --btn-ver-bg: #000000;
+            --btn-ver-texto: #ffffff;
+            --precio-color: #DC2626;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-principal);
+            color: var(--texto-principal);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Poppins', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .text-rojo { color: #DC2626; }
+        .bg-rojo { background-color: #DC2626; }
+        .border-rojo { border-color: #DC2626; }
+
+        /* TARJETAS - BORDE SIEMPRE ROJO EN HOVER */
+        .card-hover {
+            background-color: var(--bg-tarjeta);
+            border: 1px solid var(--borde-tarjeta);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px var(--hover-tarjeta);
+            border-color: #DC2626 !important; /* Fuerza el borde rojo */
+        }
+
+        /* Botón Ver Detalles */
+        .btn-ver {
+            background-color: var(--btn-ver-bg);
+            color: var(--btn-ver-texto);
+            transition: all 0.3s ease;
+        }
+        .btn-ver:hover {
+            opacity: 0.9;
+        }
+
+        /* Precio */
+        .precio {
+            color: var(--precio-color);
+        }
+
+        .whatsapp-float {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 9999;
+            width: 65px;
+            height: 65px;
+            background-color: #25D366;
+            color: white;
+            border-radius: 50px;
+            font-size: 35px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        .whatsapp-float:hover { background-color: #128C7E; transform: scale(1.1); }
+
+        .header-tema { background-color: var(--bg-header); }
+        .footer-tema { background-color: var(--bg-footer); color: var(--texto-secundario); }
+        .header-tema a, .footer-tema, .footer-tema p {
+            color: #ffffff;
+        }
+
+        #menu-movil { display: none; }
+
+        /* LIMPIAR ESTILOS AMARILLOS DEL CSS EXTERNO */
+        .card-hover {
+            border-color: var(--borde-tarjeta) !important;
+        }
+        .card-hover:hover {
+            border-color: #DC2626 !important;
+        }
+    </style>
+</head>
+<body class="bg-animado" id="body-tema">
+
+    <!-- Header (con botón de cambio de tema) -->
+    <nav class="header-tema backdrop-blur-md p-4 sticky top-0 z-50 border-b-2 border-rojo">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="index.php"><img src="img/logos/logo.png" alt="Logo MadeCars" class="h-12"></a>
+            <div class="hidden md:flex items-center space-x-6 font-medium">
+                <a href="index.php" class="hover:text-rojo transition">Inicio</a>
+                <a href="inventory.html" class="hover:text-rojo transition">Inventario</a>
+                <a href="index.php#quienes-somos" class="hover:text-rojo transition">Quiénes Somos</a>
+                <a href="index.php#contacto" class="hover:text-rojo transition">Contacto</a>
+                <button onclick="toggleTheme()" class="theme-toggle bg-rojo/10 text-rojo hover:bg-rojo hover:text-white">
+                    <i id="icono-tema" class="fas fa-sun"></i>
+                </button>
+            </div>
+            <div class="md:hidden flex items-center space-x-4">
+                <button onclick="toggleTheme()" class="theme-toggle bg-rojo/10 text-rojo hover:bg-rojo hover:text-white">
+                    <i id="icono-tema-movil" class="fas fa-sun"></i>
+                </button>
+                <button onclick="toggleMenu()" class="text-rojo text-2xl">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Menú móvil -->
+        <div id="menu-movil" class="md:hidden mt-2 rounded-lg p-4" style="background-color: var(--bg-header);">
+            <a href="index.php" class="block py-2 text-white hover:text-rojo transition">Inicio</a>
+            <a href="inventory.html" class="block py-2 text-white hover:text-rojo transition">Inventario</a>
+            <a href="index.php#quienes-somos" class="block py-2 text-white hover:text-rojo transition">Quiénes Somos</a>
+            <a href="index.php#contacto" class="block py-2 text-white hover:text-rojo transition">Contacto</a>
+        </div>
+    </nav>
+
+    <!-- Filtros -->
+    <section class="py-10 container mx-auto px-4">
+        <h1 class="text-4xl font-bold text-center mb-8" style="color: var(--texto-titulo);">Nuestro Inventario</h1>
+        <div class="flex flex-wrap justify-center gap-4 mb-8">
+            <select id="filtro-marca" class="bg-gray-800 border border-gray-700 rounded-lg px-4 py-2" style="background-color: var(--bg-tarjeta); color: var(--texto-principal);">
+                <option value="">Todas las Marcas</option>
+            </select>
+            <select id="filtro-precio" class="bg-gray-800 border border-gray-700 rounded-lg px-4 py-2" style="background-color: var(--bg-tarjeta); color: var(--texto-principal);">
+                <option value="">Todos los Precios</option>
+                <option value="0-50000">Menos de $50,000</option>
+                <option value="50000-100000">$50,000 - $100,000</option>
+                <option value="100000-200000">$100,000 - $200,000</option>
+                <option value="200000-999999">Más de $200,000</option>
+            </select>
+            <select id="filtro-anio" class="bg-gray-800 border border-gray-700 rounded-lg px-4 py-2" style="background-color: var(--bg-tarjeta); color: var(--texto-principal);">
+                <option value="">Todos los Años</option>
+            </select>
+        </div>
+
+        <!-- Grid de Vehículos -->
+        <div id="grid-vehiculos" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8 min-h-[350px]"></div>
+        
+        <div id="cargando-mas" class="text-center py-10 hidden">
+            <i class="fas fa-circle-notch fa-spin text-3xl text-rojo"></i>
+            <p class="mt-2" style="color: var(--texto-secundario);">Cargando más vehículos...</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer-tema py-8 border-t border-rojo">
+        <div class="container mx-auto px-4 text-center">
+            <img src="img/logos/logo.png" alt="Logo MadeCars" class="h-10 mx-auto mb-4">
+            <p>© 2026 MadeCars. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Botón WhatsApp Flotante -->
+    <a href="https://wa.me/18294649902?text=Hola%20MadeCars,%20Me%20interesa%20m%C3%A1s%20informacion%20sobre" target="_blank" class="whatsapp-float" aria-label="WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script src="js/inventario.js"></script>
+    <script>
+        function toggleTheme() {
+            const body = document.getElementById('body-tema');
+            body.classList.toggle('light-mode');
+            const icono = document.getElementById('icono-tema');
+            const iconoMovil = document.getElementById('icono-tema-movil');
+            if (body.classList.contains('light-mode')) {
+                icono.className = 'fas fa-moon';
+                iconoMovil.className = 'fas fa-moon';
+                localStorage.setItem('theme', 'light');
+            } else {
+                icono.className = 'fas fa-sun';
+                iconoMovil.className = 'fas fa-sun';
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const temaGuardado = localStorage.getItem('theme');
+            const body = document.getElementById('body-tema');
+            const icono = document.getElementById('icono-tema');
+            const iconoMovil = document.getElementById('icono-tema-movil');
+            if (temaGuardado === 'light') {
+                body.classList.add('light-mode');
+                icono.className = 'fas fa-moon';
+                iconoMovil.className = 'fas fa-moon';
+            } else {
+                icono.className = 'fas fa-sun';
+                iconoMovil.className = 'fas fa-sun';
+            }
+        });
+
+        function toggleMenu() {
+            const menu = document.getElementById('menu-movil');
+            menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+        }
+    </script>
+</body>
+</html>
